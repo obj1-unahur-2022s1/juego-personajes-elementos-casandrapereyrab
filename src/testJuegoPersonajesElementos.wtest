@@ -1,0 +1,47 @@
+import cosas.*
+import armas.*
+import jugadoresPersonajes.*
+
+
+test "Luisa con personaje Mario encuentra aurora y castillo" {
+	
+	luisa.personajeActivo(mario)
+	luisa.aparece(aurora)
+	luisa.aparece(castillo)
+	
+	assert.equals(45, mario.valorRecolectado())
+	assert.that(mario.estaFeliz())
+	assert.equals(170, castillo.nivelDeDefensa())
+
+}
+
+
+test "Floki con Jabalina, Luisa personaje Mario, aparece tipa, Luisa personaje cambia a Floki, luego aparecen aurora y el castillo" {
+	floki.cambiarArma(jabalina)
+	luisa.personajeActivo(mario)
+	luisa.aparece(tipa)
+	luisa.personajeActivo(floki)
+	luisa.aparece(aurora)
+	luisa.aparece(castillo)
+	
+	assert.equals(16, mario.valorRecolectado())
+	assert.equals(9, tipa.altura())
+	assert.notThat(mario.estaFeliz())
+	assert.notThat(aurora.estaViva())
+	assert.equals(150, castillo.nivelDeDefensa())
+	assert.notThat(jabalina.estaCargada())
+}
+
+
+test "Floki arma ballesta, luisa personaje Floki, luego aparecen aurora y el castillo" {
+	floki.cambiarArma(ballesta)
+	luisa.personajeActivo(floki)
+	luisa.aparece(aurora)
+	luisa.aparece(castillo)
+	
+	assert.equals(0, mario.valorRecolectado())
+	assert.that(aurora.estaViva())
+	assert.equals(146, castillo.nivelDeDefensa())
+	assert.that(ballesta.estaCargada())
+	assert.equals(8, ballesta.cantidadFlechas())
+}
